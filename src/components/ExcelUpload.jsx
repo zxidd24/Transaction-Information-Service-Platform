@@ -6,18 +6,20 @@ const ExcelUpload = ({ onUploadSuccess }) => {
   const [error, setError] = useState(null);
 
   const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
     setUploading(true);
     setError(null);
-    const formData = new FormData();
-    formData.append('file', file);
     try {
-      const res = await fetch('http://localhost:3001/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      if (!res.ok) throw new Error('上传失败');
+      for (const file of files) {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch('http://localhost:3001/upload', {
+          method: 'POST',
+          body: formData,
+        });
+        if (!res.ok) throw new Error('上传失败: ' + file.name);
+      }
       onUploadSuccess && onUploadSuccess();
     } catch (err) {
       setError(err.message);
@@ -28,7 +30,7 @@ const ExcelUpload = ({ onUploadSuccess }) => {
   };
 
   return (
-    <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+    <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
       <label style={{
         display: 'inline-block',
         padding: '0.6em 1.5em',
@@ -49,6 +51,7 @@ const ExcelUpload = ({ onUploadSuccess }) => {
           ref={fileInputRef}
           onChange={handleFileChange}
           disabled={uploading}
+          multiple
           style={{
             position: 'absolute',
             left: 0,
@@ -59,7 +62,7 @@ const ExcelUpload = ({ onUploadSuccess }) => {
             cursor: uploading ? 'not-allowed' : 'pointer',
           }}
         />
-        {uploading ? '上传中...' : '选择文件'}
+        {uploading ? '上传中...' : '添加文件（可多选）'}
       </label>
       {error && <div style={{ color: 'red', marginTop: 8 }}>{error}</div>}
     </div>
