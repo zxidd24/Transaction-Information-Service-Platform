@@ -1,0 +1,32 @@
+.
+├── README.md
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── project_structure.txt
+├── public
+│   └── vite.svg
+├── server
+│   ├── index.js
+│   ├── package-lock.json
+│   ├── package.json
+│   └── uploads
+│       ├── 1751877928981-测试.xlsx
+│       ├── 1751877947982-article.xls
+│       ├── 1751878035677-测试.xlsx
+│       └── 1751879699915-pt_pro_cq_type.xlsx
+├── src
+│   ├── App.css
+│   ├── App.jsx
+│   ├── assets
+│   │   └── react.svg
+│   ├── components
+│   │   ├── ExcelFileList.jsx
+│   │   ├── ExcelPreview.jsx
+│   │   └── ExcelUpload.jsx
+│   ├── index.css
+│   └── main.jsx
+└── vite.config.js
+
+7 directories, 23 files
