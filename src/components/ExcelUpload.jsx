@@ -28,7 +28,7 @@ const ExcelUpload = ({ onUploadSuccess }) => {
   };
 
   return (
-    <div style={{ margin: '2em 0' }}>
+    <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
       <label style={{
         display: 'inline-block',
         padding: '0.6em 1.5em',

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { utils, writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 
 const ExcelPreview = ({ fileName }) => {
@@ -55,9 +56,25 @@ const ExcelPreview = ({ fileName }) => {
     })];
   }
 
+  // 导出当前预览的Excel
+  const handleExport = () => {
+    if (!filteredData || filteredData.length === 0) return;
+    const ws = utils.aoa_to_sheet(filteredData);
+    const wb = utils.book_new();
+    utils.book_append_sheet(wb, ws, activeSheet || 'Sheet1');
+    writeFile(wb, fileName ? `导出_${fileName}` : '导出表格.xlsx');
+  };
+
   return (
     <div style={{ margin: '2em 0' }}>
       <h2>预览：{fileName}</h2>
+      <button
+        onClick={handleExport}
+        style={{ marginBottom: 16, background: '#1677ff', color: '#fff', border: 'none', borderRadius: 4, padding: '6px 18px', fontSize: 16, cursor: 'pointer', boxShadow: '0 2px 8px #1677ff22' }}
+        disabled={!filteredData || filteredData.length === 0}
+      >
+        导出当前表为Excel
+      </button>
       {error && <div style={{ color: 'red' }}>{error}</div>}
       {sheets.length > 1 && (
         <div style={{ marginBottom: 8 }}>
